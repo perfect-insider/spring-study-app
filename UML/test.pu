@@ -1,0 +1,39 @@
+@startuml classMap
+
+' モデル（データを表すクラス）
+package com.example.demo.model {
+    class Test {
+        - login_id : String
+        - password : String
+    }
+}
+
+' データベース操作（インターフェース）
+package com.example.demo.repository {
+    interface TestMapper {
+        + selectAll() : List<Test>
+    }
+}
+
+' サービス（ビジネスロジック）
+package com.example.demo.service {
+    class TestService {
+        - mapper : TestMapper
+        + selectAll() : List<Test>
+    }
+}
+
+' コントローラー（画面やAPIの入り口）
+package com.example.demo.controller {
+    class TestController {
+        - service : TestService
+        + testList(mav : ModelAndView) : ModelAndView
+    }
+}
+
+' クラス同士のつながり（矢印で表現）
+TestMapper ..> Test : <<Testを使う>>
+TestService --> TestMapper : <<TestMapperを使う>>
+TestController --> TestService : <<TestServiceを使う>>
+
+@enduml

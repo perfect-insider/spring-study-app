@@ -1,0 +1,25 @@
+@startuml seqMap
+
+actor User
+
+User -> TestController : /list にアクセス
+activate TestController
+
+TestController -> TestService : selectAll() を呼び出す
+activate TestService
+
+TestService -> TestMapper : selectAll() を呼び出す
+activate TestMapper
+
+TestMapper -> Database : user_infoテーブルから全件取得 (SELECT * FROM user_info)
+Database --> TestMapper : List<Test> を返す
+deactivate TestMapper
+
+TestMapper --> TestService : List<Test> を返す
+deactivate TestService
+
+TestService --> TestController : List<Test> を返す
+
+TestController -> list.html : データを渡して画面描画
+
+@enduml

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>list</title>
+</head>
+
+<body>
+    <table>
+        <!-- user_infoテーブルの全レコードを1行ずつ表示 -->
+        <tr th:each="list : ${page}" th:object="${list}">
+            <td th:text="*{login_id}"></td>
+        </tr>
+    </table>
+</body>
+
+</html>

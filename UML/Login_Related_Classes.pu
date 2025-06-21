@@ -1,0 +1,60 @@
+@startuml Login_Related_Classes
+skinparam classAttributeIconSize 0
+hide emptymembers
+left to right direction
+
+package com.example.demo.controller {
+  class LoginController {
+    + view(Model, LoginForm): String
+    + login(Model, LoginForm): String
+  }
+}
+
+package com.example.demo.form {
+  class LoginForm {
+    + login_Id: String
+    + password: String
+  }
+}
+
+package com.example.demo.service {
+  class LoginService {
+    + searchUserByID(String): Optional<UserInfo>
+  }
+}
+
+package com.example.demo.entity {
+  class UserInfo {
+    + loginId: String
+    + password: String
+  }
+}
+
+package com.example.demo.repository {
+  interface UserInfoRepository <<JPA Repository>> {
+    + findById(String): Optional<UserInfo>
+  }
+}
+
+package org.springframework.ui {
+  interface Model <<Framework Interface>>
+}
+
+' --- Relationships ---
+LoginController --> LoginService : uses >
+LoginController --> LoginForm : uses (as form backing object and parameter) >
+LoginController --> Model : uses (to pass data to view) >
+
+LoginService --> UserInfoRepository : uses >
+LoginService ..> UserInfo : returns Optional of
+
+UserInfoRepository ..> UserInfo : manages/returns Optional of
+
+' --- HTML Rendering Note ---
+note "renders login.html" as N_LoginHtml
+LoginController .. N_LoginHtml
+note "login.html uses:\n- Model attribute 'errorMsg'\n- Model attribute 'loginForm' (LoginForm)" as N_ModelData
+N_LoginHtml .. N_ModelData
+N_ModelData ..> LoginForm
+
+@enduml

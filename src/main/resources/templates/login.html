@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <h2>ログイン画面</h2>
+    <!-- コントローラーから渡されたerrorMsgを表示 -->
+    <span th:text="${errorMsg}"></span>
+</head>
+
+<body>
+    <!--    @はルートパス/指定したURLへアクセスする -->
+    <!-- /loginにPOST送信し、loginFormオブジェクトとバインド -->
+    <form th:action="@{/login}" method="post" th:object="${loginForm}">
+        <div>
+            <label>ログインID</label>
+            <!-- loginFormオブジェクトのlogin_Idとバインド -->
+            <input type="text" th:field="*{loginId}">
+        </div>
+        <div>
+            <label>パスワード</label>
+            <!-- loginFormオブジェクトpasswordとバインド -->
+            <input type="password" th:field="*{password}">
+        </div>
+        <div>
+            <input type="submit" value="ログイン">
+        </div>
+    </form>
+</body>
+
+</html>

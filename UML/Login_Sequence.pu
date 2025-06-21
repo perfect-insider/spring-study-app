@@ -1,0 +1,28 @@
+@startuml Login_Sequence
+autonumber "<b>[0]"
+actor ユーザー
+participant "login.html" as View
+participant "LoginController" as Controller
+participant "LoginService" as Service
+participant "UserInfoRepository" as Repository
+database "Database" as DB
+
+ユーザー -> View : ログイン情報入力 & 送信
+View -> Controller : POST /login (LoginForm)
+Controller -> Service : searchUserByID(loginId)
+Service -> Repository : findById(loginId)
+Repository -> DB : SELECT * FROM user_info WHERE login_id = ?
+DB --> Repository : UserInfo 結果
+Repository --> Service : Optional<UserInfo>
+Service --> Controller : Optional<UserInfo>
+
+alt 認証成功 (ユーザー情報が存在し、パスワードが一致)
+    Controller -> Controller : "redirect:/menu" を返す
+    Controller --> ユーザー : /menu へリダイレクト
+else 認証失敗
+    Controller -> Model : addAttribute("errorMsg", "エラーメッセージ")
+    Controller -> Controller : "login" を返す
+    Controller --> View : エラーメッセージと共にログイン画面再表示
+    View --> ユーザー : ログイン画面表示 (エラーメッセージ付き)
+end
+@enduml
