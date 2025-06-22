@@ -13,13 +13,13 @@
 - thymeleaf
 
 ## 主なファイル
-src/main/java/com/example/demo/controller/LoginController.java
-src/main/java/com/example/demo/entity/UserInfo.java
-src/main/java/com/example/demo/repository/UserInfoRepository.java
-src/main/java/com/example/demo/service/LoginService.java
-src/main/java/com/example/demo/form/LoginForm.java
-src/main/resources/templates/login.html
-src/main/resources/templates/menu.html
+- src/main/java/com/example/demo/controller/LoginController.java
+- src/main/java/com/example/demo/entity/UserInfo.java
+- src/main/java/com/example/demo/repository/UserInfoRepository.java
+- src/main/java/com/example/demo/service/LoginService.java
+- src/main/java/com/example/demo/form/LoginForm.java
+- src/main/resources/templates/login.html
+- src/main/resources/templates/menu.html
 
 ## 💡 学び・メモ
 - MVCの基礎
