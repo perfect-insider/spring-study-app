@@ -1,15 +1,17 @@
 package com.example.demo.form;
 
-// Lombokの@Dataアノテーションを使用して、
-// ゲッター、セッター、toString、equals、hashCodeメソッドを自動生成
 import lombok.Data;
 
-// ログインフォームのデータを保持するクラス
+/**
+ * ログイン画面 Form
+ * 
+ * @author AS
+ */
 @Data
 public class LoginForm {
-    // ユーザーのログインIDを保持するフィールド
+    /** ログインID */
     private String loginId;
 
-    // ユーザーのパスワードを保持するフィールド
+    /** パスワード */
     private String password;
 }

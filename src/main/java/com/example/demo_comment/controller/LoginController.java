@@ -10,26 +10,17 @@ import com.example.demo.service.LoginService;
 
 import lombok.RequiredArgsConstructor;
 
+// Spring MVCのコントローラークラスとして定義
 /**
- * ログイン画面 Controller
- * 
- * @author AS
- * 
+ * ログイン画面を表示し、ログイン処理を行うコントローラークラス。
  */
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
 
-    /** ログイン画面 Service */
     private final LoginService service;
 
-    /**
-     * 初期表示
-     * 
-     * @param model モデル
-     * @param form  入力画面
-     * @return 表示画面
-     */
+    // ログイン画面を表示するためのGETリクエストを処理
     @GetMapping("/login")
     public String view(Model model, LoginForm form) {
         // Spring MVCでは、コントローラーメソッドの引数にLoginForm formのようにフォームオブジェクトを指定すると、
@@ -37,29 +28,26 @@ public class LoginController {
         // そのため、model.addAttributeの呼び出しは不要です。
         // model.addAttribute("loginForm", form);
 
+        // "login"という名前のテンプレートを返す
         return "login";
     }
 
-    /**
-     * ログイン
-     * 
-     * @param model モデル
-     * @param form  入力画面
-     * @return 表示画面
-     */
+    // ログイン処理を行うためのPOSTリクエストを処理
     @PostMapping("/login")
     public String login(Model model, LoginForm form) {
         var userInfo = service.searchUserByID(form.getLoginId());
-        // TODO パスワードはハッシュ化したものを使用する
         var isCorrectUserAuth = userInfo.isPresent() &&
                 form.getPassword().equals(userInfo.get().getPassword());
 
-        // ログインIDとパスワードの照合結果をチェック
+        // ユーザー認証が成功した場合の処理
         if (isCorrectUserAuth) {
+            // 認証成功時の処理（menu.htmlへリダイレクト）
             return "redirect:/menu";
         } else {
-            // TODO エラーメッセージはプロパティファイルで管理する
+            // 認証失敗時の処理（エラーメッセージを表示）
+            // modelにエラーメッセージを追加
             model.addAttribute("errorMsg", "ログインIDまたはパスワードが間違っています。");
+            // "login"という名前のテンプレートを返す
             return "login";
         }
     }
