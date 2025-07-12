@@ -6,8 +6,10 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.UserInfo;
 
 /**
- * ユーザー情報を管理するリポジトリインターフェース。
- * ユーザー情報のCRUD操作を提供します。
+ * ユーザー情報テーブル DAO
+ * 
+ * @author AS
+ * 
  */
 // @RepositoryはSpringのリポジトリを示すアノテーション
 @Repository

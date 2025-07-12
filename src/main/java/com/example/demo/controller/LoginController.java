@@ -1,10 +1,14 @@
 package com.example.demo.controller;
 
+import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.Util.AppUtil;
+import com.example.demo.constant.ErrorMessageConst;
 import com.example.demo.form.LoginForm;
 import com.example.demo.service.LoginService;
 
@@ -22,6 +26,12 @@ public class LoginController {
 
     /** ログイン画面 Service */
     private final LoginService service;
+
+    /** passwordEncoder */
+    private final PasswordEncoder passwordEncoder;
+
+    /** メッセージソース */
+    private final MessageSource messageSource;
 
     /**
      * 初期表示
@@ -50,16 +60,18 @@ public class LoginController {
     @PostMapping("/login")
     public String login(Model model, LoginForm form) {
         var userInfo = service.searchUserByID(form.getLoginId());
-        // TODO パスワードはハッシュ化したものを使用する
         var isCorrectUserAuth = userInfo.isPresent() &&
-                form.getPassword().equals(userInfo.get().getPassword());
+        // form.getPassword().equals(userInfo.get().getPassword());
+                passwordEncoder.matches(form.getPassword(), userInfo.get().getPassword());
 
         // ログインIDとパスワードの照合結果をチェック
         if (isCorrectUserAuth) {
             return "redirect:/menu";
         } else {
             // TODO エラーメッセージはプロパティファイルで管理する
-            model.addAttribute("errorMsg", "ログインIDまたはパスワードが間違っています。");
+            // model.addAttribute("errorMsg", "ログインIDまたはパスワードが間違っています。");
+            var errorMsg = AppUtil.getMessage(messageSource, ErrorMessageConst.LOGIN_WRONG_INPUT);
+            model.addAttribute("errorMsg", errorMsg);
             return "login";
         }
     }
