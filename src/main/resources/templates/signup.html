@@ -3,15 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <h2>ログイン画面</h2>
+    <h2>ユーザー登録画面</h2>
     <!-- コントローラーから渡されたerrorMsgを表示 -->
     <span th:text="${errorMsg}"></span>
 </head>
 
 <body>
-    <!--    @はルートパス/指定したURLへアクセスする -->
+    <!-- @はルートパスの指定したURLへアクセスする -->
     <!-- /loginにPOST送信し、loginFormオブジェクトとバインド -->
-    <form th:action="@{/login}" method="post" th:object="${loginForm}">
+    <form th:action="@{/signup}" method="post" th:object="${signupForm}">
         <div>
             <label>ログインID</label>
             <!-- loginFormオブジェクトのlogin_Idとバインド -->
@@ -23,10 +23,9 @@
             <input type="password" th:field="*{password}">
         </div>
         <div>
-            <input type="submit" value="ログイン">
+            <input type="submit" value="ユーザー登録">
         </div>
     </form>
-    <a th:href="@{/signup}">ユーザー登録</a>
 </body>
 
 </html>

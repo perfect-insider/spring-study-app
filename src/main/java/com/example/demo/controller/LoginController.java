@@ -68,8 +68,6 @@ public class LoginController {
         if (isCorrectUserAuth) {
             return "redirect:/menu";
         } else {
-            // TODO エラーメッセージはプロパティファイルで管理する
-            // model.addAttribute("errorMsg", "ログインIDまたはパスワードが間違っています。");
             var errorMsg = AppUtil.getMessage(messageSource, ErrorMessageConst.LOGIN_WRONG_INPUT);
             model.addAttribute("errorMsg", errorMsg);
             return "login";
