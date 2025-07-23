@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
-import org.dozer.Mapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.SignupForm;
+import com.example.demo.mapper.SignupMapper;
 import com.example.demo.repository.UserInfoRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,8 @@ public class SignupService {
     /** ユーザー情報テーブルDAO */
     private final UserInfoRepository repository;
 
-    /** Dozer Mapper */
-    private final Mapper mapper;
+    /** Signup Mapper */
+    private final SignupMapper signupMapper;
 
     /** パスワードエンコーダ */
     private final PasswordEncoder passwordEncoder;
@@ -29,7 +29,7 @@ public class SignupService {
      * @return 登録情報（ユーザー情報Entity）
      */
     public UserInfo resistUserInfo(SignupForm form) {
-        var userInfo = mapper.map(form, UserInfo.class);
+        var userInfo = signupMapper.signupFormToUserInfo(form);
         var encodedPassword = passwordEncoder.encode(form.getPassword());
         userInfo.setPassword(encodedPassword);
 

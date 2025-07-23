@@ -24,7 +24,7 @@ public class SignupController {
     private final SignupService service;
 
     /**
-     * 5
+     * 
      * 初期表示
      * 
      * @param model モデル
